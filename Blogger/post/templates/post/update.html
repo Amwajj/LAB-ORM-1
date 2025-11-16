@@ -4,14 +4,14 @@
 
 
 {% block content %}
-<h1>Add New Post</h1>
+<h1>Update Post</h1>
 
 <div class="row">
     <div class="col-6">
-        <form action="{% url 'post:add_post_view'%}" class="d-flex flex-column gap-2" method="post" enctype="multipart/form-data">
+        <form action="{% url 'post:post_update_view' post.id%}" class="d-flex flex-column gap-2" method="post" enctype="multipart/form-data">
             {%csrf_token %}
-            <input type="text" placeholder="Title" name="title" class="form-control" />
-            <textarea name="content" placeholder="write the content of your post here" class="form-control"></textarea>
+            <input type="text" placeholder="Title" name="title" class="form-control" value="{{post.title}}"/>
+            <textarea name="content" placeholder="write the content of your post here" class="form-control">{{post.content}}</textarea>
             <label for="is_published">Do you want to publish it?</label>
             <div class="form-check">
                 <input class="form-check-input" type="radio" name="is_published" id="radioYes" value="True" checked>
@@ -25,7 +25,15 @@
                     No
                 </label>
             </div>
-            <input type="file" name="poster" class="form-control">
+            <div class="row">
+                <div class="col-3">
+                    <img src="{{post.poster.url}}" class="w-100">
+                </div>
+                <div class="col">
+                    <input type="file" name="poster" class="form-control">
+                </div>
+            </div>
+            
             <input type="submit" value="Add Post" class="btn btn-primary "/>
         </form>
 
